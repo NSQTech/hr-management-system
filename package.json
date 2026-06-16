@@ -2,16 +2,7 @@
   "name": "hr-management-system",
   "version": "0.1.0",
   "private": true,
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "@prisma/client",
-      "@prisma/engines",
-      "prisma",
-      "@tailwindcss/oxide",
-      "sharp",
-      "unrs-resolver"
-    ]
-  },
+  "packageManager": "pnpm@9.15.9",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
