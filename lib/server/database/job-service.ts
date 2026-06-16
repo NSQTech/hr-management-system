@@ -156,8 +156,16 @@ export const jobService = {
       location: data.location,
       type: convertJobTypeToPrisma(data.type),
       status: data.status,
+      level: data.level,
+      salaryMin: data.salaryMin,
+      salaryMax: data.salaryMax,
+      currency: data.currency,
       description: data.description || '',
-      requirements: data.requirements?.join('\n') || '',
+      requirements: data.requirements ?? [],
+      benefits: data.benefits ?? [],
+      responsibilities: data.responsibilities ?? [],
+      applicationDeadline: new Date(data.applicationDeadline),
+      contactEmail: data.contactEmail,
     }
 
     return prisma.jobPosting.create({
@@ -183,9 +191,7 @@ export const jobService = {
     if (data.status !== undefined) updateData.status = data.status
     if (data.description !== undefined) updateData.description = data.description
     if (data.requirements !== undefined) {
-      updateData.requirements = Array.isArray(data.requirements)
-        ? data.requirements.join('\n')
-        : data.requirements
+      updateData.requirements = data.requirements
     }
 
     return prisma.jobPosting.update({

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/api'
 
 interface RouteParams {
-  params: { id: string }
+  params: Promise<{ id: string }>
 }
 
 export async function GET(
@@ -10,8 +10,9 @@ export async function GET(
   { params }: RouteParams
 ) {
   try {
+    const { id } = await params
     const employee = await prisma.employee.findUnique({
-      where: { id: params.id },
+      where: { id },
       include: {
         leaveRequests: {
           orderBy: { created_at: 'desc' },
@@ -46,9 +47,10 @@ export async function PUT(
   { params }: RouteParams
 ) {
   try {
+    const { id } = await params
     const body = await request.json()
     const employee = await prisma.employee.update({
-      where: { id: params.id },
+      where: { id },
       data: body
     })
 
@@ -67,8 +69,9 @@ export async function DELETE(
   { params }: RouteParams
 ) {
   try {
+    const { id } = await params
     await prisma.employee.delete({
-      where: { id: params.id }
+      where: { id }
     })
 
     return NextResponse.json({ message: 'Employee deleted' })
