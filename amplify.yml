@@ -3,11 +3,12 @@ frontend:
   phases:
     preBuild:
       commands:
-        - npm ci
+        - corepack enable
+        - pnpm install --frozen-lockfile
     build:
       commands:
         - npx prisma generate
-        - npm run build
+        - pnpm run build
   artifacts:
     baseDirectory: .next
     files:
