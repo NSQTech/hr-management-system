@@ -7,6 +7,9 @@ frontend:
         - pnpm install --frozen-lockfile
     build:
       commands:
+        # Amplify console env vars are build-time only; persist the server-side
+        # ones into .env.production so the Next.js SSR runtime can read them.
+        - env | grep -E '^(DATABASE_URL|JWT_SECRET|JWT_REFRESH_SECRET)=' >> .env.production
         - npx prisma generate
         - pnpm run build
   artifacts:
